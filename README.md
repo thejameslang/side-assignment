@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# side-assignment
 
-## Available Scripts
+## What is this?
 
-In the project directory, you can run:
+This is my submission to the Side Inc. take home assignment. It is a React project which when run features a table view of GitHub users stored in a FireBase Cloud Firestore. The user will be able to search for a GitHub username. If the username exists, the user's details will be stored to the Cloud Firestore and subsequently displayed in the table.
 
-### `npm start`
+The site has been deployed via Netlify to [here](https://pedantic-shirley-25b15e.netlify.com/).
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Requirements
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Begin by installing the following:
 
-### `npm test`
+- [Node.js](https://nodejs.org)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Install dependencies with npm
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+$ npm install
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Compile and hot-reload for development
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+$ npm run start
+```
 
-### `npm run eject`
+After running the above, http://localhost:3000 should open in your default browser. Changes are watched.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Building for production
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+$ npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## What I would like to do with more time
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+If there was more time, I would like to have the following improvements:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Design
+  - I followed the wireframe provided in the instructions but have the following observations:
+    - The text input should perhaps clear after a search to save the user from having to clear it manually
+    - It may not be readily obvious that the text input is in a form and a search is triggered after entering text by pressing the 'enter' key to submit the form. Perhaps a `search` button would be welcome.
+    - The requirements did not specify whether or not to check for duplicate users in the database. With more time I would like to have it check prior to adding to prevent duplicate entries.
+    - I took the liberty of using Bulma's table row hover effect. However, this personally does not jive for me with the GitHub profile link being on the first table cell. The hover suggests the entire row is clickable. I would either remove this effect or make the entire row click to navigate to the user's GitHub profile.
+    - I understood the success/failure message to be a notification. I would explore doing this as a toast notification instead, or perhaps giving the user the ability to close/delete them once they have viewed them. This would mean storing the notifications as an array (simulating a queue) instead of the string that I have used. I currently have them disappearing after 2000 milliseconds. I would also like to use CSS animations to have the notification fade in and out.
+    - ADA compliance is a concern, would like to address that and test with VoiceOver and JAWS.
+- Maintainability
+  - Static type system and linter
+  - Unit testing
+  - Integration tests
+  - e2e functional tests
+- Reusability
+  - If this is to be reused in other projects, it can be packaged as a Web Component if there is a need to be framework agnostic. Otherwise with a small bit of effort it can be packaged to be imported and used as a component in another React project.
+- Other thoughts
+  - Perhaps more robust error handling; the app currently optimistically assumes no connection issues.
+  - Pagination may be useful if the collection of users grows to be too long (both from a performance standpoint as well as a usability one).
+  - I believe there are newer, lighter alternatives to Moment.js nowadays that can be used and are more conducive to tree shaking.
