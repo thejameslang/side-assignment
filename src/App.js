@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import firebase from "./firebase";
+import moment from "moment";
 
 function App() {
   const [searchGitHubUsername, setSearchGitHubUsername] = React.useState("");
@@ -65,7 +66,7 @@ function App() {
                 <th>{user.public_gists}</th>
                 <th>{user.followers}</th>
                 <th>{user.following}</th>
-                <th>{user.created_at}</th>
+                <th>{moment(user.created_at).format("MM/DD/YYYY")}</th>
               </tr>
             ))}
           </tbody>
