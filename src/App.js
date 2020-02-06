@@ -5,8 +5,14 @@ import firebase from "./firebase";
 
 function App() {
   const [searchGitHubUsername, setSearchGitHubUsername] = React.useState("");
+  const [users, setUsers] = React.useState([]);
 
   const db = firebase.firestore();
+
+  const fetchData = async () => {
+    const data = await db.collection("users").get();
+    setUsers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+  };
 
   const onSearch = () => {
     fetch("https://api.github.com/users/" + searchGitHubUsername, {})
@@ -23,6 +29,11 @@ function App() {
       })
       .catch(error => alert("connection issue!"));
   };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
       <input
@@ -30,6 +41,11 @@ function App() {
         onChange={e => setSearchGitHubUsername(e.target.value)}
       />
       <button onClick={onSearch}>Search</button>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.login}</li>
+        ))}
+      </ul>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
