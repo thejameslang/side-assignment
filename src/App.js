@@ -36,16 +36,42 @@ function App() {
 
   return (
     <div className="App">
-      <input
-        value={searchGitHubUsername}
-        onChange={e => setSearchGitHubUsername(e.target.value)}
-      />
-      <button onClick={onSearch}>Search</button>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>{user.login}</li>
-        ))}
-      </ul>
+      <div className="container">
+        <input
+          value={searchGitHubUsername}
+          onChange={e => setSearchGitHubUsername(e.target.value)}
+        />
+        <button onClick={onSearch}>Search</button>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Public Repos</th>
+              <th>Public Gists</th>
+              <th>Followers</th>
+              <th>Following</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user.id}>
+                <th>
+                  <a href={user.html_url}>{user.login}</a>
+                </th>
+                <th>{user.name}</th>
+                <th>{user.public_repos}</th>
+                <th>{user.public_gists}</th>
+                <th>{user.followers}</th>
+                <th>{user.following}</th>
+                <th>{user.created_at}</th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ul></ul>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
