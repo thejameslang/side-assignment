@@ -15,7 +15,8 @@ function App() {
     setUsers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   };
 
-  const onSearch = () => {
+  const onSearch = e => {
+    e.preventDefault();
     fetch("https://api.github.com/users/" + searchGitHubUsername, {})
       .then(response => {
         if (response.ok) {
@@ -38,11 +39,28 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <input
-          value={searchGitHubUsername}
-          onChange={e => setSearchGitHubUsername(e.target.value)}
-        />
-        <button onClick={onSearch}>Search</button>
+        <div className="columns">
+          <div className="column">
+            <form onSubmit={onSearch}>
+              <div className="field">
+                <div className="control">
+                  <input
+                    className="input is-primary"
+                    type="text"
+                    placeholder="Enter GitHub username to search here"
+                    value={searchGitHubUsername}
+                    onChange={e => setSearchGitHubUsername(e.target.value)}
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div className="columns">
+          <div className="column">
+            <button onClick={onSearch}>Search</button>
+          </div>
+        </div>
         <table className="table">
           <thead>
             <tr>
