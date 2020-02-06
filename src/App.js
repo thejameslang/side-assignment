@@ -7,6 +7,7 @@ import moment from "moment";
 function App() {
   const [searchGitHubUsername, setSearchGitHubUsername] = React.useState("");
   const [users, setUsers] = React.useState([]);
+  const [searchNotification, setSearchNotification] = React.useState("");
 
   const db = firebase.firestore();
 
@@ -20,20 +21,30 @@ function App() {
     fetch("https://api.github.com/users/" + searchGitHubUsername, {})
       .then(response => {
         if (response.ok) {
-          alert("user found!");
+          // alert("user found!");
+          setSearchNotification("success");
           response.json().then(data => {
             console.log(data);
             db.collection("users").add(data);
           });
         } else {
-          alert("user not found!");
+          // alert("user not found!");
+          setSearchNotification("failure");
         }
       })
-      .catch(error => alert("connection issue!"));
+      .catch(error => {
+        // alert("connection issue!");
+        setSearchNotification("failure");
+      });
   };
 
   React.useEffect(() => {
     fetchData();
+    if (searchNotification.length > 0) {
+      setTimeout(() => {
+        setSearchNotification("");
+      }, 2000);
+    }
   });
 
   return (
@@ -56,6 +67,24 @@ function App() {
             </form>
           </div>
         </div>
+        {searchNotification === "success" && (
+          <div className="columns">
+            <div className="column">
+              <div className="notification is-found">
+                Success: user "{searchGitHubUsername}" added to the db.
+              </div>
+            </div>
+          </div>
+        )}
+        {searchNotification === "failure" && (
+          <div className="columns">
+            <div className="column">
+              <div className="notification is-found">
+                Error: Error adding "{searchGitHubUsername}" to the db.
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="columns">
           <div className="column">
