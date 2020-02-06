@@ -32,7 +32,7 @@ function App() {
 
   React.useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   return (
     <div className="App">
